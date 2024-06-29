@@ -2,6 +2,7 @@ require('dotenv').config()
 const port = process.env.PORT
 const uri = process.env.MONGO_URI
 
+const cors = require('cors')
 const express = require('express')
 const mongoose = require('mongoose')
 const articleRoute = require('./routes/postsroute')
@@ -13,6 +14,11 @@ mongoose.set("strictQuery", false)
 // express app
 const app = express()
 
+const corsOptions = {
+    origin: process.env.ALLOWED_ORIGIN
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use('/articles', articleRoute)
 app.use('/auth', authRoute)
